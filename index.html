@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>攀登生命的高峰 - 四年級寫作引導與互動學習網頁</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- html2canvas for exporting reading markup and essays -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Google Fonts: Zen Maru Gothic & Noto Serif TC as fallback for Iansui style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            morandi: {
+              bg: '#F5F2EB',       // 燕麥白底色
+              card: '#FCFAF7',     // 柔白卡片
+              sage: '#8A9A86',     // 鼠尾草綠
+              sageDark: '#677B63',
+              blue: '#7A8B99',     // 灰霧藍
+              blueDark: '#566B7B',
+              pink: '#C59B8B',     // 灰粉紅
+              pinkDark: '#A87968',
+              sand: '#D9CEB2',     // 奶茶沙褐
+              charcoal: '#383634', // 沉靜碳灰文字
+              border: '#E2DBD0',   // 溫潤邊界色
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* 嚴格字體規範：芫荽楷書體為首選，標楷體/楷體備援 */
+    :root {
+      --font-kai: '芫荽', 'Iansui', 'BiauKai', 'DFKai-SB', 'Noto Serif TC', 'KaiTi', serif;
+    }
+    body {
+      font-family: var(--font-kai);
+      background-color: #F5F2EB;
+      color: #383634;
+      font-size: 20px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      touch-action: manipulation;
+    }
+    
+    /* 標題與內文字級嚴格規範 */
+    .edu-title {
+      font-family: var(--font-kai);
+      font-size: 44px !important;
+      line-height: 1.25;
+      letter-spacing: 0.05em;
+    }
+    .edu-body, p, li, button, input, textarea, select {
+      font-family: var(--font-kai);
+      font-size: 20px;
+    }
+    .edu-sub {
+      font-family: var(--font-kai);
+      font-size: 26px;
+    }
+
+    /* 16:9 黃金比例投影舞台 (在大型螢幕優先維持 16:9，行動端自適應流體高度) */
+    @media (min-width: 1024px) {
+      .stage-16-9 {
+        aspect-ratio: 16 / 9;
+        min-height: 640px;
+      }
+    }
+    @media (max-width: 1023px) {
+      .stage-16-9 {
+        min-height: auto;
+      }
+    }
+
+    /* 翻牌卡片 3D 效果 */
+    .perspective-card {
+      perspective: 1000px;
+    }
+    .card-inner {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .card-flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-face-back {
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+    }
+    .card-face-front {
+      backface-visibility: hidden;
+    }
+
+    /* 螢光筆與底線效果 */
+    .hl-yellow {
+      background: linear-gradient(180deg, transparent 40%, rgba(246, 224, 94, 0.65) 40%);
+      border-radius: 3px;
+    }
+    .hl-green {
+      background: linear-gradient(180deg, transparent 40%, rgba(154, 230, 180, 0.65) 40%);
+      border-radius: 3px;
+    }
+    .hl-pink {
+      background: linear-gradient(180deg, transparent 40%, rgba(254, 178, 178, 0.65) 40%);
+      border-radius: 3px;
+    }
+    .mark-underline {
+      text-decoration: underline wavy #A87968 2px;
+      text-underline-offset: 6px;
+    }
+
+    /* 捲軸美化 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #EFECE6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C4BCB3;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #A89F95;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-morandi-pink selection:text-white">
+
+  <!-- 頁首與收合式頂部導航 -->
+  <header class="w-full bg-morandi-card border-b border-morandi-border sticky top-0 z-50 shadow-sm transition-all duration-300" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between flex-wrap gap-2">
+      <!-- 標題與單元標記 -->
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-morandi-sage text-white font-bold text-xl shadow-inner">
+          🏔️
+        </span>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold tracking-wide text-morandi-charcoal">
+            攀登生命的高峰 <span class="text-sm font-normal text-morandi-blueDark px-2 py-0.5 bg-morandi-bg rounded-md ml-1 border border-morandi-border">四年級國語文 · 寫作特訓</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- 右側動作區：縮小收合切換 & 專屬教師名牌 -->
+      <div class="flex items-center space-x-3">
+        <!-- 縮小/收合導航按鈕 -->
+        <button id="toggleNavBtn" onclick="toggleNavCollapse()" class="px-3 py-1.5 text-sm rounded-lg border border-morandi-border bg-morandi-bg hover:bg-morandi-card text-morandi-charcoal transition flex items-center gap-1 shadow-sm" title="一鍵收合/展開標籤列，騰出更多教學投影空間">
+          <span id="navToggleIcon">🔼</span>
+          <span id="navToggleText">精簡視窗</span>
+        </button>
+
+        <!-- 專屬署名徽章 -->
+        <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-morandi-pink/15 border border-morandi-pink text-morandi-pinkDark font-semibold text-sm tracking-wider shadow-sm">
+          <span class="mr-1">✍️</span> 執教：陳佳釧老師
+        </div>
+      </div>
+    </div>
+
+    <!-- 主頁籤導航列 (可縮小折疊) -->
+    <nav id="navBarContainer" class="max-w-7xl mx-auto px-4 sm:px-6 pb-2 transition-all duration-300">
+      <div class="flex items-center justify-start sm:justify-center overflow-x-auto gap-2 py-1 scrollbar-none">
+        <button onclick="switchTab('reading')" id="tabBtn-reading" class="tab-btn px-4 py-2 rounded-xl text-morandi-charcoal bg-morandi-bg border border-morandi-border hover:bg-morandi-sage/20 transition whitespace-nowrap active-tab font-medium flex items-center gap-1.5">
+          <span>📖</span> 課文閱讀與註記
+        </button>
+        <button onclick="switchTab('writing')" id="tabBtn-writing" class="tab-btn px-4 py-2 rounded-xl text-morandi-charcoal bg-morandi-bg border border-morandi-border hover:bg-morandi-sage/20 transition whitespace-nowrap font-medium flex items-center gap-1.5">
+          <span>✍️</span> 寫作五關階梯工坊
+        </button>
+        <button onclick="switchTab('interactive')" id="tabBtn-interactive" class="tab-btn px-4 py-2 rounded-xl text-morandi-charcoal bg-morandi-bg border border-morandi-border hover:bg-morandi-sage/20 transition whitespace-nowrap font-medium flex items-center gap-1.5">
+          <span>🎮</span> 攀登事件排序小遊戲
+        </button>
+        <button onclick="switchTab('quiz')" id="tabBtn-quiz" class="tab-btn px-4 py-2 rounded-xl text-morandi-charcoal bg-morandi-bg border border-morandi-border hover:bg-morandi-sage/20 transition whitespace-nowrap font-medium flex items-center gap-1.5">
+          <span>🏆</span> 10題終點成效檢核
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 主要工作台容器 -->
+  <main class="w-full max-w-7xl mx-auto px-3 sm:px-6 py-4 flex-grow flex flex-col justify-start">
+
+    <!-- 頁籤一：課文閱讀與批註工具箱 (Reading & Annotation Workspace) -->
+    <section id="tab-reading" class="tab-content block space-y-4">
+      <!-- 頂部工具箱 -->
+      <div class="bg-morandi-card border border-morandi-border rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center flex-wrap gap-2">
+          <span class="text-sm font-bold text-morandi-blueDark flex items-center gap-1 mr-1">
+            <span>🖍️</span> 閱讀輔助工具箱：
+          </span>
+          <button onclick="setAnnotateMode('hl-yellow')" id="tool-hl-yellow" class="tool-btn px-3 py-1.5 rounded-lg border border-yellow-300 bg-yellow-100/70 hover:bg-yellow-200 text-yellow-900 text-sm flex items-center gap-1">
+            <span class="w-3 h-3 rounded-full bg-yellow-400"></span> 亮黃重點
+          </button>
+          <button onclick="setAnnotateMode('hl-green')" id="tool-hl-green" class="tool-btn px-3 py-1.5 rounded-lg border border-green-300 bg-green-100/70 hover:bg-green-200 text-green-900 text-sm flex items-center gap-1">
+            <span class="w-3 h-3 rounded-full bg-green-400"></span> 綠色好句
+          </button>
+          <button onclick="setAnnotateMode('hl-pink')" id="tool-hl-pink" class="tool-btn px-3 py-1.5 rounded-lg border border-red-300 bg-red-100/70 hover:bg-red-200 text-red-900 text-sm flex items-center gap-1">
+            <span class="w-3 h-3 rounded-full bg-red-400"></span> 粉紅修辭
+          </button>
+          <button onclick="setAnnotateMode('underline')" id="tool-underline" class="tool-btn px-3 py-1.5 rounded-lg border border-morandi-pink bg-morandi-pink/10 hover:bg-morandi-pink/20 text-morandi-pinkDark text-sm flex items-center gap-1">
+            <span>〰️</span> 波浪底線
+          </button>
+          <button onclick="applyAnnotationToSelection()" class="px-3.5 py-1.5 rounded-lg bg-morandi-sage text-white hover:bg-morandi-sageDark text-sm font-semibold shadow-sm flex items-center gap-1 transition">
+            <span>✏️</span> 標記選取文字
+          </button>
+          <button onclick="clearTextAnnotations()" class="px-3 py-1.5 rounded-lg border border-morandi-border bg-morandi-bg hover:bg-stone-200 text-stone-700 text-sm flex items-center gap-1">
+            <span>🧹</span> 清除全部標記
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="addStickyNote()" class="px-3.5 py-1.5 rounded-lg bg-morandi-blue text-white hover:bg-morandi-blueDark text-sm font-semibold shadow-sm flex items-center gap-1 transition">
+            <span>📝</span> 新增心得便利貼
+          </button>
+          <button onclick="exportReadingCapture()" class="px-3.5 py-1.5 rounded-lg bg-morandi-pink text-white hover:bg-morandi-pinkDark text-sm font-semibold shadow-sm flex items-center gap-1 transition">
+            <span>📸</span> 匯出課文筆記PNG
+          </button>
+        </div>
+      </div>
+
+      <!-- 課文舞台核心：16:9 投影片級白板容器 -->
+      <div id="readingCaptureZone" class="bg-morandi-card border-2 border-morandi-border rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden">
+        <!-- 課文標題 -->
+        <div class="text-center border-b border-morandi-border pb-4 mb-6">
+          <div class="inline-block px-4 py-1 rounded-full bg-morandi-sand/30 text-morandi-charcoal text-sm font-bold tracking-widest mb-2">
+            四上國語 · 典範名人精讀
+          </div>
+          <h2 class="edu-title text-morandi-charcoal font-black tracking-wide">
+            攀登生命的高峰
+          </h2>
+          <p class="text-morandi-blueDark text-sm mt-1">※ 請選取下方文字後點擊上方「標記選取文字」，或新增便利貼寫下學習體悟。</p>
+        </div>
+
+        <!-- 課文內容區 (6個完整段落) -->
+        <div id="readingTextContent" class="space-y-6 text-morandi-charcoal max-w-4xl mx-auto tracking-wide leading-relaxed">
+          <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="1">
+            <span class="font-bold text-morandi-pinkDark mr-2">【第一段】</span>這位被稱為「最接近天空的女子」，站在一片雪白的山前開朗的笑著。她是臺灣第一位登上珠穆朗瑪峰的女子，也是臺灣首位成功登上世界七頂峰的女登山家──江秀真。
+          </p>
+
+          <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="2">
+            <span class="font-bold text-morandi-pinkDark mr-2">【第二段】</span>江秀真從高中開始就喜歡登山，當她站上山頂，瞭望著千變萬化的美景，就不知不覺的愛上了山。沉靜的高山就像母親一樣，時而溫暖的擁抱著她，時而冷酷的磨練著她。眼前壯麗的美景，帶給她擁抱世界的歡樂，也帶給她實現自我的成就感。
+          </p>
+
+          <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="3">
+            <span class="font-bold text-morandi-pinkDark mr-2">【第三段】</span>在攀登完臺灣八十多座高山後，江秀真決定迎向世界最高峰──珠穆朗瑪峰。為了完成這個目標，她每天跑步十公里，每星期進行三天的低氧訓練。在西元一九九五年五月，她正式向世界最高峰出發。
+          </p>
+
+          <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="4">
+            <span class="font-bold text-morandi-pinkDark mr-2">【第四段】</span>這段辛苦的過程是旁人無法體會的。江秀真踩著沉重的腳步，冒著隨時可能跌落谷底的危險，緩緩前進。她頂著呼呼作響的寒風，忍受五十多度的日夜溫差。登上頂峰的最後一段路，是她生命中最大的難關。
+          </p>
+
+          <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="5">
+            <span class="font-bold text-morandi-pinkDark mr-2">【第五段】</span>當時，她的體力早已用盡，到底是要努力前進，還是要放棄？當她不知所措時，眼前閃過登頂的畫面，那股成功的渴望鼓舞著她。最後，她鼓起勇氣，排除重重難關，終於踏上世界的頂峰。
+          </p>
+
+          <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="6">
+            <span class="font-bold text-morandi-pinkDark mr-2">【第六段】</span>從鄉野的一座小山出發，迎向世界的頂峰，無論眼前的山路有多危險，江秀真始終踩著勇氣與決心的腳步，一步步攀登生命裡的每一座高峰。
+          </p>
+        </div>
+
+        <!-- 懸浮心得便利貼放置區 -->
+        <div id="stickyNotesContainer" class="relative mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- 預設第一張便利貼示範 -->
+          <div class="sticky-note bg-amber-100 border-2 border-amber-300 rounded-2xl p-4 shadow-md relative transform rotate-1 transition hover:rotate-0">
+            <div class="flex items-center justify-between pb-2 border-b border-amber-200 mb-2">
+              <span class="text-xs font-bold text-amber-800">📌 閱讀筆記 1</span>
+              <button onclick="this.closest('.sticky-note').remove()" class="text-amber-700 hover:text-red-600 text-sm font-bold">✕</button>
+            </div>
+            <textarea class="w-full bg-transparent border-none focus:outline-none text-amber-950 resize-none text-base h-24" placeholder="在此記錄心靈啟發...">江秀真每天跑十公里又做低氧訓練，讓我知道任何巨大的成就背後，都需要日復一日的自律與毅力！</textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁籤二：寫作五關階梯工坊 (Five-Stage Writing Masterclass) -->
+    <section id="tab-writing" class="tab-content hidden space-y-6">
+      <!-- 關卡階梯切換按鈕 -->
+      <div class="bg-morandi-card border border-morandi-border rounded-2xl p-3 shadow-sm flex items-center justify-center gap-1 sm:gap-3 flex-wrap">
+        <button onclick="switchStage(1)" id="stageBtn-1" class="stage-nav-btn px-4 py-2 rounded-xl text-sm sm:text-base font-bold bg-morandi-sage text-white shadow-sm transition">
+          關卡一：審題放大鏡
+        </button>
+        <button onclick="switchStage(2)" id="stageBtn-2" class="stage-nav-btn px-4 py-2 rounded-xl text-sm sm:text-base font-bold bg-morandi-bg text-morandi-charcoal hover:bg-stone-200 transition">
+          關卡二：靈感九宮格
+        </button>
+        <button onclick="switchStage(3)" id="stageBtn-3" class="stage-nav-btn px-4 py-2 rounded-xl text-sm sm:text-base font-bold bg-morandi-bg text-morandi-charcoal hover:bg-stone-200 transition">
+          關卡三：結構建築師
+        </button>
+        <button onclick="switchStage(4)" id="stageBtn-4" class="stage-nav-btn px-4 py-2 rounded-xl text-sm sm:text-base font-bold bg-morandi-bg text-morandi-charcoal hover:bg-stone-200 transition">
+          關卡四：寫作魔法師
+        </button>
+        <button onclick="switchStage(5)" id="stageBtn-5" class="stage-nav-btn px-4 py-2 rounded-xl text-sm sm:text-base font-bold bg-morandi-bg text-morandi-charcoal hover:bg-stone-200 transition">
+          關卡五：我是小作家
+        </button>
+      </div>
+
+      <!-- 關卡一：審題放大鏡 -->
+      <div id="stage-panel-1" class="stage-panel block bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-pink/20 text-morandi-pinkDark text-sm font-bold">第一關 · 審題放大鏡</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">拆解題目關鍵字</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">題目：「值得我學習的名人」── 點擊翻牌卡片，找出題目裡的三大通關密碼！</p>
+          </div>
+
+          <!-- 3張翻牌卡片 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <!-- 卡片 1 -->
+            <div class="perspective-card h-52 cursor-pointer" onclick="toggleCardFlip(this)">
+              <div class="card-inner w-full h-full relative border-2 border-morandi-sage/40 rounded-2xl bg-morandi-bg shadow-sm hover:shadow-md transition">
+                <div class="card-face-front absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                  <span class="text-4xl mb-2">🔍</span>
+                  <h4 class="text-2xl font-bold text-morandi-sageDark">密碼一：主角是誰？</h4>
+                  <p class="text-sm text-stone-500 mt-2">（點擊翻轉看解析）</p>
+                </div>
+                <div class="card-face-back absolute inset-0 bg-morandi-sage text-white rounded-2xl flex flex-col items-center justify-center p-5 text-center">
+                  <h5 class="font-bold text-xl mb-1">【名人】</h5>
+                  <p class="text-sm leading-relaxed">具備代表性、有真實經歷的人物（如登山家江秀真、運動員戴資穎、發明家愛迪生、麵包師傅吳寶春等）。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卡片 2 -->
+            <div class="perspective-card h-52 cursor-pointer" onclick="toggleCardFlip(this)">
+              <div class="card-inner w-full h-full relative border-2 border-morandi-blue/40 rounded-2xl bg-morandi-bg shadow-sm hover:shadow-md transition">
+                <div class="card-face-front absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                  <span class="text-4xl mb-2">💎</span>
+                  <h4 class="text-2xl font-bold text-morandi-blueDark">密碼二：核心特質？</h4>
+                  <p class="text-sm text-stone-500 mt-2">（點擊翻轉看解析）</p>
+                </div>
+                <div class="card-face-back absolute inset-0 bg-morandi-blue text-white rounded-2xl flex flex-col items-center justify-center p-5 text-center">
+                  <h5 class="font-bold text-xl mb-1">【值得學習】</h5>
+                  <p class="text-sm leading-relaxed">不可只流水帳寫他的一生，必須找出他身上最閃耀的精神：如堅持、勇氣、自律、熱情或不服輸。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卡片 3 -->
+            <div class="perspective-card h-52 cursor-pointer" onclick="toggleCardFlip(this)">
+              <div class="card-inner w-full h-full relative border-2 border-morandi-pink/40 rounded-2xl bg-morandi-bg shadow-sm hover:shadow-md transition">
+                <div class="card-face-front absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                  <span class="text-4xl mb-2">🎯</span>
+                  <h4 class="text-2xl font-bold text-morandi-pinkDark">密碼三：對誰產生啟發？</h4>
+                  <p class="text-sm text-stone-500 mt-2">（點擊翻轉看解析）</p>
+                </div>
+                <div class="card-face-back absolute inset-0 bg-morandi-pink text-white rounded-2xl flex flex-col items-center justify-center p-5 text-center">
+                  <h5 class="font-bold text-xl mb-1">【我】</h5>
+                  <p class="text-sm leading-relaxed">文章最後必須回扣自己的生活！這名人的事蹟如何鼓勵我克服自己的困難與缺點？</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 自訂主題與靈感標籤按鈕 -->
+          <div class="bg-morandi-bg/80 border border-morandi-border rounded-2xl p-5 space-y-3 mt-4">
+            <label class="block font-bold text-morandi-charcoal">
+              💡 請決定你想描寫的名人對象：（點選下方名人，將為你自動替換專屬好詞與短句素材庫）
+            </label>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <button onclick="selectHero('jiang')" id="heroChip-jiang" class="hero-chip px-3 py-1.5 rounded-full text-sm bg-morandi-sage text-white border border-morandi-sage font-bold transition">
+                🏔️ 江秀真（登山超越極限）
+              </button>
+              <button onclick="selectHero('tai')" id="heroChip-tai" class="hero-chip px-3 py-1.5 rounded-full text-sm bg-white border border-morandi-border hover:border-morandi-sage hover:bg-morandi-sage/10 text-morandi-charcoal transition">
+                🏸 戴資穎（沉著冷靜的球后）
+              </button>
+              <button onclick="selectHero('wu')" id="heroChip-wu" class="hero-chip px-3 py-1.5 rounded-full text-sm bg-white border border-morandi-border hover:border-morandi-sage hover:bg-morandi-sage/10 text-morandi-charcoal transition">
+                🥖 吳寶春（刻苦耐勞的匠人）
+              </button>
+              <button onclick="selectHero('edison')" id="heroChip-edison" class="hero-chip px-3 py-1.5 rounded-full text-sm bg-white border border-morandi-border hover:border-morandi-sage hover:bg-morandi-sage/10 text-morandi-charcoal transition">
+                💡 愛迪生（不畏挫折的發明家）
+              </button>
+              <button onclick="selectHero('helen')" id="heroChip-helen" class="hero-chip px-3 py-1.5 rounded-full text-sm bg-white border border-morandi-border hover:border-morandi-sage hover:bg-morandi-sage/10 text-morandi-charcoal transition">
+                🌟 海倫凱勒（戰勝黑暗的光芒）
+              </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <input type="text" id="targetHeroName" placeholder="輸入你想寫的名人姓名（如：江秀真）" class="px-4 py-2.5 rounded-xl border border-morandi-border bg-white focus:outline-none focus:ring-2 focus:ring-morandi-sage" value="江秀真">
+              <input type="text" id="targetHeroSpirit" placeholder="輸入他最值得學習的精神（如：不畏艱難的毅力）" class="px-4 py-2.5 rounded-xl border border-morandi-border bg-white focus:outline-none focus:ring-2 focus:ring-morandi-sage" value="堅持到底與勇於攀登夢想的勇氣">
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button onclick="saveStage1AndNext()" class="px-6 py-2.5 rounded-xl bg-morandi-sage text-white font-bold hover:bg-morandi-sageDark transition flex items-center gap-2 shadow-sm">
+              下一步：填寫靈感九宮格 ➜
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 關卡二：靈感九宮格 -->
+      <div id="stage-panel-2" class="stage-panel hidden bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-5xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-sage/20 text-morandi-sageDark text-sm font-bold">第二關 · 靈感九宮格</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">發想取材素材庫</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">目前鎖定名人：<span id="activeHeroLabel" class="font-bold text-morandi-pinkDark">江秀真</span>（已帶入該名人的精煉好詞與描寫短句，可自由增刪）</p>
+          </div>
+
+          <!-- 九宮格動態表單 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <!-- 格子 1 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-sageDark px-2 py-0.5 bg-morandi-sage/15 rounded">1. 主角背景</span>
+                <h5 class="font-bold text-lg mt-1">她是誰？有何身分？</h5>
+                <textarea id="grid-1" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-sage"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(1)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 2 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-blueDark px-2 py-0.5 bg-morandi-blue/15 rounded">2. 宏大目標</span>
+                <h5 class="font-bold text-lg mt-1">他下定決心做什麼？</h5>
+                <textarea id="grid-2" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-blue"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(2)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 3 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-pinkDark px-2 py-0.5 bg-morandi-pink/15 rounded">3. 刻苦鍛鍊</span>
+                <h5 class="font-bold text-lg mt-1">平日付出哪些汗水？</h5>
+                <textarea id="grid-3" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-pink"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(3)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 4 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-sageDark px-2 py-0.5 bg-morandi-sage/15 rounded">4. 巨大考驗</span>
+                <h5 class="font-bold text-lg mt-1">面臨什麼危險險阻？</h5>
+                <textarea id="grid-4" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-sage"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(4)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 5 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-blueDark px-2 py-0.5 bg-morandi-blue/15 rounded">5. 五感細節描寫</span>
+                <h5 class="font-bold text-lg mt-1">聽見什麼？皮膚感受到什麼？</h5>
+                <textarea id="grid-5" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-blue"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(5)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 6 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-pinkDark px-2 py-0.5 bg-morandi-pink/15 rounded">6. 內心拉扯</span>
+                <h5 class="font-bold text-lg mt-1">體力用盡時想放棄嗎？</h5>
+                <textarea id="grid-6" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-pink"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(6)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 7 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-sageDark px-2 py-0.5 bg-morandi-sage/15 rounded">7. 成功破繭</span>
+                <h5 class="font-bold text-lg mt-1">最後的關鍵轉折？</h5>
+                <textarea id="grid-7" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-sage"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(7)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 8 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-blueDark px-2 py-0.5 bg-morandi-blue/15 rounded">8. 核心精神</span>
+                <h5 class="font-bold text-lg mt-1">用一句話總結他的態度？</h5>
+                <textarea id="grid-8" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-blue"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(8)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+
+            <!-- 格子 9 -->
+            <div class="bg-morandi-bg p-4 rounded-2xl border border-morandi-border flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-morandi-pinkDark px-2 py-0.5 bg-morandi-pink/15 rounded">9. 我的心靈啟發</span>
+                <h5 class="font-bold text-lg mt-1">我自己在生活中該怎麼做？</h5>
+                <textarea id="grid-9" rows="3" class="w-full mt-2 p-2 rounded-xl border border-morandi-border bg-white text-base focus:ring-1 focus:ring-morandi-pink"></textarea>
+              </div>
+              <button onclick="injectPresetGrid(9)" class="text-xs text-morandi-blueDark hover:underline mt-1 text-left">💡 套用名人靈感詞</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between pt-2">
+            <button onclick="switchStage(1)" class="px-5 py-2 rounded-xl border border-morandi-border bg-white hover:bg-stone-100 transition">
+              ⬅ 返回審題
+            </button>
+            <button onclick="switchStage(3)" class="px-6 py-2.5 rounded-xl bg-morandi-sage text-white font-bold hover:bg-morandi-sageDark transition flex items-center gap-2 shadow-sm">
+              下一步：結構建築師 ➜
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 關卡三：結構建築師 -->
+      <div id="stage-panel-3" class="stage-panel hidden bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-5xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-blue/20 text-morandi-blueDark text-sm font-bold">第三關 · 結構建築師</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">段落骨架與寫作技巧</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">參考課文「總—分—分—總」與「起—承—轉—合」的完美黃金比例架構！</p>
+          </div>
+
+          <!-- 四大段骨架視覺流程 -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+            <div class="p-4 rounded-2xl bg-amber-50/80 border-2 border-amber-200 text-center">
+              <span class="text-xs font-bold px-2 py-1 bg-amber-200 text-amber-900 rounded-md">第一段：起 (總起)</span>
+              <h5 class="font-bold text-xl text-morandi-charcoal mt-2">人物亮眼登場</h5>
+              <p class="text-sm text-stone-600 mt-2">用響亮稱號或特寫鏡頭引入（最接近天空的女子），點出主角姓名與最大榮耀。</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50/80 border-2 border-emerald-200 text-center">
+              <span class="text-xs font-bold px-2 py-1 bg-emerald-200 text-emerald-900 rounded-md">第二段：承 (鋪陳)</span>
+              <h5 class="font-bold text-xl text-morandi-charcoal mt-2">熱愛與自律鍛鍊</h5>
+              <p class="text-sm text-stone-600 mt-2">敘述喜愛原因（母親般的山）、立下宏願與背後嚴格扎實的日課訓練（跑步、低氧）。</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-rose-50/80 border-2 border-rose-200 text-center">
+              <span class="text-xs font-bold px-2 py-1 bg-rose-200 text-rose-900 rounded-md">第三段：轉 (轉折高潮)</span>
+              <h5 class="font-bold text-xl text-morandi-charcoal mt-2">險阻考驗與突破</h5>
+              <p class="text-sm text-stone-600 mt-2">細膩刻畫惡劣環境與內心掙扎，體力用盡時如何以渴望戰勝恐懼，登頂成功！</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-sky-50/80 border-2 border-sky-200 text-center">
+              <span class="text-xs font-bold px-2 py-1 bg-sky-200 text-sky-900 rounded-md">第四段：合 (總結昇華)</span>
+              <h5 class="font-bold text-xl text-morandi-charcoal mt-2">精神總結與自我立志</h5>
+              <p class="text-sm text-stone-600 mt-2">將攀登山峰昇華為攀登人生高峰，並反思自己該如何效仿他的勇氣面對挑戰。</p>
+            </div>
+          </div>
+
+          <!-- 課文前後對比示範區：普通寫法 VS 名家精彩寫法 -->
+          <div class="bg-morandi-bg p-5 rounded-2xl border border-morandi-border space-y-4">
+            <h4 class="font-bold text-xl text-morandi-charcoal flex items-center gap-2">
+              <span>⚖️</span> 名家寫作技巧放大鏡：普通寫法 VS 課文精彩寫法對比
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-base">
+              <!-- 普通寫法 -->
+              <div class="p-4 rounded-xl bg-white border border-stone-200">
+                <span class="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded">常見初學流水帳 ❌</span>
+                <p class="mt-2 text-stone-600 leading-relaxed">
+                  江秀真很喜歡爬山，山上的風景很漂亮。她爬山覺得很開心，也很有成就感。
+                </p>
+                <span class="block mt-2 text-xs text-rose-500">缺少具體修辭與情感層次，平淡無奇。</span>
+              </div>
+              <!-- 課文寫法 -->
+              <div class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-300">
+                <span class="text-xs font-bold text-emerald-800 bg-emerald-200 px-2 py-1 rounded">課文修辭示範（譬喻＋雙重感受） ⭐</span>
+                <p class="mt-2 text-emerald-950 leading-relaxed">
+                  「沉靜的高山就像母親一樣，時而溫暖的擁抱著她，時而冷酷的磨練著她。眼前壯麗的美景，帶給她擁抱世界的歡樂，也帶給她實現自我的成就感。」
+                </p>
+                <span class="block mt-2 text-xs text-emerald-700">運用「母親」擬人譬喻，寫出溫暖與嚴酷的兩面性，意境深遠！</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-between pt-2">
+            <button onclick="switchStage(2)" class="px-5 py-2 rounded-xl border border-morandi-border bg-white hover:bg-stone-100 transition">
+              ⬅ 返回靈感庫
+            </button>
+            <button onclick="switchStage(4)" class="px-6 py-2.5 rounded-xl bg-morandi-sage text-white font-bold hover:bg-morandi-sageDark transition flex items-center gap-2 shadow-sm">
+              下一步：寫作魔法師 ➜
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 關卡四：寫作魔法師 -->
+      <div id="stage-panel-4" class="stage-panel hidden bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-5xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-pink/20 text-morandi-pinkDark text-sm font-bold">第四關 · 寫作魔法師</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">分段擴寫與錦囊好詞</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">點選「好詞錦囊」可直接插入游標處；好詞庫已依據名人自動量身更換！</p>
+          </div>
+
+          <!-- 四段分段寫作區 -->
+          <div class="space-y-6 pt-2">
+            <!-- 第一段編輯區 -->
+            <div class="bg-morandi-bg p-5 rounded-2xl border border-morandi-border space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="font-bold text-morandi-charcoal">【第一段：名人登場與封號】</span>
+                <!-- 動態好詞庫 -->
+                <div class="flex flex-wrap gap-1 text-xs items-center">
+                  <span class="text-stone-500 py-1">專屬好詞：</span>
+                  <div id="phraseContainer-p1" class="flex flex-wrap gap-1"></div>
+                </div>
+              </div>
+              <textarea id="draft-p1" rows="3" oninput="updateWordCount()" class="w-full p-3 rounded-xl border border-morandi-border bg-white text-base focus:ring-2 focus:ring-morandi-sage" placeholder="第一段引導：她被稱為什麼？照片或出場時給人什麼印象？他是臺灣第一位完成什麼創舉的人？"></textarea>
+            </div>
+
+            <!-- 第二段編輯區 -->
+            <div class="bg-morandi-bg p-5 rounded-2xl border border-morandi-border space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="font-bold text-morandi-charcoal">【第二段：熱愛出發與刻苦準備】</span>
+                <div class="flex flex-wrap gap-1 text-xs items-center">
+                  <span class="text-stone-500 py-1">專屬好詞：</span>
+                  <div id="phraseContainer-p2" class="flex flex-wrap gap-1"></div>
+                </div>
+              </div>
+              <textarea id="draft-p2" rows="4" oninput="updateWordCount()" class="w-full p-3 rounded-xl border border-morandi-border bg-white text-base focus:ring-2 focus:ring-morandi-sage" placeholder="第二段引導：他從什麼時候愛上這件事？帶給他什麼樣的情感？為了達到頂峰，他在日常中做了哪些旁人無法想像的刻苦訓練？"></textarea>
+            </div>
+
+            <!-- 第三段編輯區 -->
+            <div class="bg-morandi-bg p-5 rounded-2xl border border-morandi-border space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="font-bold text-morandi-charcoal">【第三段：生死交關的難關與登頂】</span>
+                <div class="flex flex-wrap gap-1 text-xs items-center">
+                  <span class="text-stone-500 py-1">專屬好詞：</span>
+                  <div id="phraseContainer-p3" class="flex flex-wrap gap-1"></div>
+                </div>
+              </div>
+              <textarea id="draft-p3" rows="4" oninput="updateWordCount()" class="w-full p-3 rounded-xl border border-morandi-border bg-white text-base focus:ring-2 focus:ring-morandi-sage" placeholder="第三段引導：在最艱難的路上，遭遇了哪些考驗？（寒風、溫差、懸崖）體力耗盡時內心有何拉扯？最後是什麼力量鼓舞他戰勝難關？"></textarea>
+            </div>
+
+            <!-- 第四段編輯區 -->
+            <div class="bg-morandi-bg p-5 rounded-2xl border border-morandi-border space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="font-bold text-morandi-charcoal">【第四段：生命啟發與我的實踐】</span>
+                <div class="flex flex-wrap gap-1 text-xs items-center">
+                  <span class="text-stone-500 py-1">專屬好詞：</span>
+                  <div id="phraseContainer-p4" class="flex flex-wrap gap-1"></div>
+                </div>
+              </div>
+              <textarea id="draft-p4" rows="3" oninput="updateWordCount()" class="w-full p-3 rounded-xl border border-morandi-border bg-white text-base focus:ring-2 focus:ring-morandi-sage" placeholder="第四段引導：從他身上，我看見了什麼重要的人生哲理？當我在自己的課業或生活遇到困難時，我要如何像他一樣勇往直前？"></textarea>
+            </div>
+          </div>
+
+          <!-- 寫作進度與暫存提示 -->
+          <div class="flex items-center justify-between flex-wrap gap-3 p-4 bg-white rounded-2xl border border-morandi-border">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold text-morandi-blueDark">📊 累計字數：<span id="totalWordCount" class="text-lg text-morandi-pinkDark font-black">0</span> 字</span>
+              <button onclick="fillExampleDraft()" class="text-xs px-2.5 py-1 bg-morandi-sand/30 hover:bg-morandi-sand/60 text-morandi-charcoal rounded-md transition">
+                ⚡ 載入示範全文初稿
+              </button>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="switchStage(3)" class="px-5 py-2 rounded-xl border border-morandi-border bg-white hover:bg-stone-100 transition">
+                ⬅ 返回架構
+              </button>
+              <button onclick="assembleAndGoStage5()" class="px-6 py-2.5 rounded-xl bg-morandi-pink text-white font-bold hover:bg-morandi-pinkDark transition flex items-center gap-2 shadow-sm">
+                組裝文章：我是小作家 ➜
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 關卡五：我是小作家 -->
+      <div id="stage-panel-5" class="stage-panel hidden bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-5xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-sage/20 text-morandi-sageDark text-sm font-bold">第五關 · 我是小作家</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">成就大作與自我檢核</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">恭喜你！前幾關的心血已自動組裝完成，快進行最後檢查並匯出作品吧！</p>
+          </div>
+
+          <!-- 完整的文章預覽與列印卡片 -->
+          <div id="finalEssayExportArea" class="bg-morandi-bg p-6 sm:p-8 rounded-3xl border-2 border-morandi-border shadow-inner relative">
+            <div class="text-center pb-4 border-b border-morandi-border mb-4">
+              <span class="text-xs tracking-widest text-morandi-blueDark">四年級國語文 · 寫作成果單</span>
+              <h2 id="finalEssayTitle" class="edu-title text-3xl sm:text-4xl font-black text-morandi-charcoal mt-1">值得我學習的名人──攀登高峰的江秀真</h2>
+              <div class="text-xs text-stone-500 mt-2 flex justify-center gap-4">
+                <span>指導教師：陳佳釧老師</span>
+                <span id="finalEssayDate">學習日期：2026/10/10</span>
+              </div>
+            </div>
+
+            <!-- 全文內容容器 -->
+            <div id="finalFullText" class="space-y-4 text-morandi-charcoal text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto indent-8">
+              <!-- JS 動態組裝 -->
+            </div>
+          </div>
+
+          <!-- 寫作小精靈評語與自我檢查清單 -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- 評語 -->
+            <div class="p-5 rounded-2xl bg-morandi-sage/15 border border-morandi-sage">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl">🧚‍♀️</span>
+                <h4 class="font-bold text-lg text-morandi-sageDark">寫作小精靈的個人化勉勵</h4>
+              </div>
+              <p id="spriteFeedback" class="text-sm sm:text-base leading-relaxed text-morandi-charcoal">
+                你的文章脈絡分明！不僅生動描繪了名人在絕境中頂住寒風與極限的震撼場景，更珍貴的是你看見了背後「日復一日的自律」。最後回扣到自己在生活中的挑戰，讓文章充滿了真實而動人的生命力！
+              </p>
+            </div>
+
+            <!-- 自我檢查清單 -->
+            <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200">
+              <h4 class="font-bold text-lg text-amber-900 mb-2 flex items-center gap-2">
+                <span>✅</span> 小作家自我檢核清單
+              </h4>
+              <div class="space-y-2 text-sm sm:text-base text-amber-950">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-morandi-sage">
+                  <span>每一段開頭是否有確實空兩格（縮排）？</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-morandi-sage">
+                  <span>標點符號是否運用適當？（破折號、引號、問號）</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-morandi-sage">
+                  <span>是否有檢查並修正同音錯別字？</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-morandi-sage">
+                  <span>最後一段是否有寫出「我」自己受到的啟發？</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 動作列 -->
+          <div class="flex items-center justify-between flex-wrap gap-3 pt-2">
+            <button onclick="switchStage(4)" class="px-5 py-2 rounded-xl border border-morandi-border bg-white hover:bg-stone-100 transition">
+              ⬅ 返回修改各段
+            </button>
+            <div class="flex items-center gap-2">
+              <button onclick="copyFullEssayText()" class="px-4 py-2.5 rounded-xl border border-morandi-blue text-morandi-blueDark hover:bg-morandi-blue/10 font-bold transition flex items-center gap-1.5 shadow-sm">
+                <span>📋</span> 複製全文內容
+              </button>
+              <button onclick="exportEssayImage()" class="px-5 py-2.5 rounded-xl bg-morandi-pink text-white font-bold hover:bg-morandi-pinkDark transition flex items-center gap-1.5 shadow-sm">
+                <span>🖼️</span> 列印／匯出作品圖
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁籤三：互動闖關特訓（事件排序與登頂輪盤小遊戲） -->
+    <section id="tab-interactive" class="tab-content hidden space-y-6">
+      <div class="bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-blue/20 text-morandi-blueDark text-sm font-bold">課文核心互動 · 順序排列特訓</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">江秀真的生命攀登之旅</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">請依照時間與事件先後順序，點擊卡片調整順序，重現登頂歷程！</p>
+          </div>
+
+          <!-- 順序排列互動區 -->
+          <div class="bg-morandi-bg p-5 rounded-2xl border border-morandi-border">
+            <div class="flex items-center justify-between pb-3 border-b border-morandi-border mb-3">
+              <span class="text-sm font-bold text-morandi-charcoal">🎯 點擊「⬆ 上移」或「⬇ 下移」排列正確順序：</span>
+              <button onclick="resetOrderGame()" class="text-xs px-3 py-1 rounded bg-white border border-morandi-border hover:bg-stone-100 text-stone-600">重設題目</button>
+            </div>
+
+            <div id="sortableListContainer" class="space-y-3">
+              <!-- 動態生成事件卡片 -->
+            </div>
+
+            <div class="mt-5 flex items-center justify-between flex-wrap gap-2">
+              <span id="orderResultMsg" class="text-base font-bold text-morandi-pinkDark"></span>
+              <button onclick="checkOrderAnswer()" class="px-6 py-2.5 rounded-xl bg-morandi-sage text-white font-bold hover:bg-morandi-sageDark transition shadow-sm">
+                驗證排序結果
+              </button>
+            </div>
+          </div>
+
+          <!-- 創意小遊戲：8848m 登頂勇氣能量挑戰輪盤 -->
+          <div class="bg-morandi-bg p-6 rounded-2xl border border-morandi-border">
+            <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+              <div>
+                <h4 class="font-bold text-xl text-morandi-charcoal flex items-center gap-2">
+                  <span>🏔️</span> 攀登珠穆朗瑪峰：8848公尺毅力高度計
+                </h4>
+                <p class="text-sm text-stone-600">轉動毅力輪盤，獲取登山體力與精神能量，一步步登上海拔8848公尺！</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-stone-500 block">目前海拔高度</span>
+                <span id="currentAltitude" class="text-3xl font-black text-morandi-blueDark">0</span> <span class="text-sm">公尺</span>
+              </div>
+            </div>
+
+            <!-- 進度條 -->
+            <div class="w-full bg-white rounded-full h-5 p-0.5 border border-morandi-border overflow-hidden mb-6">
+              <div id="altitudeProgress" class="bg-gradient-to-r from-morandi-blue to-morandi-sage h-full rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <!-- 轉盤畫布 -->
+              <div class="relative w-48 h-48 sm:w-56 sm:h-56">
+                <canvas id="wheelCanvas" width="224" height="224" class="rounded-full shadow-md border-4 border-white"></canvas>
+                <!-- 指針 -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-0 h-0 border-x-8 border-x-transparent border-t-[16px] border-t-rose-600 z-10"></div>
+              </div>
+
+              <!-- 操作與回饋訊息 -->
+              <div class="text-center sm:text-left space-y-3 max-w-sm">
+                <p id="wheelStatusText" class="text-morandi-charcoal font-medium">點擊按鈕轉動勇氣輪盤，克服低氧與寒風考驗！</p>
+                <div class="flex items-center gap-3">
+                  <button id="spinWheelBtn" onclick="spinClimbingWheel()" class="px-6 py-3 rounded-2xl bg-morandi-pink text-white font-bold hover:bg-morandi-pinkDark transition shadow-md flex items-center gap-2 text-lg">
+                    <span>🎡</span> 轉動勇氣輪盤
+                  </button>
+                  <button onclick="resetAltitudeGame()" class="px-3.5 py-2.5 rounded-xl border border-morandi-border bg-white text-stone-600 text-sm hover:bg-stone-100">
+                    重置攀登
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁籤四：終點成效檢核（精準 10 題互動測驗） -->
+    <section id="tab-quiz" class="tab-content hidden space-y-6">
+      <div class="bg-morandi-card border border-morandi-border rounded-3xl p-6 sm:p-8 shadow-sm">
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="text-center">
+            <span class="px-3.5 py-1 rounded-full bg-morandi-sand/40 text-morandi-charcoal text-sm font-bold">單元總驗收 · 精準 10 題完整檢核</span>
+            <h3 class="edu-title text-morandi-charcoal mt-2">攀登高峰小達人挑戰</h3>
+            <p class="text-morandi-blueDark text-lg mt-1">涵蓋課文主旨、修辭、生字詞義、心理轉折與寫作技巧，即時掌握學習成效！</p>
+          </div>
+
+          <!-- 測驗進度條與狀態 -->
+          <div class="flex items-center justify-between bg-morandi-bg px-4 py-3 rounded-2xl border border-morandi-border">
+            <span class="text-sm font-bold text-morandi-charcoal">
+              題號：第 <span id="currentQuizIndexText" class="text-xl text-morandi-pinkDark font-black">1</span> / 10 題
+            </span>
+            <div class="w-1/2 bg-white rounded-full h-3 border border-morandi-border overflow-hidden">
+              <div id="quizProgressBar" class="bg-morandi-sage h-full transition-all duration-300" style="width: 10%;"></div>
+            </div>
+            <span class="text-sm font-bold text-morandi-blueDark">
+              得分：<span id="quizScoreText" class="text-xl text-morandi-blue font-black">0</span> 分
+            </span>
+          </div>
+
+          <!-- 單一題目展示區 (10 題動態輪播) -->
+          <div id="quizQuestionCard" class="bg-morandi-bg p-6 sm:p-8 rounded-3xl border-2 border-morandi-border space-y-6">
+            <!-- 題目類型與題幹 -->
+            <div>
+              <span id="questionCategoryBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-morandi-blue/20 text-morandi-blueDark">課文細節理解</span>
+              <h4 id="questionPrompt" class="text-2xl font-bold text-morandi-charcoal mt-2 leading-relaxed">
+                <!-- JS 填入 -->
+              </h4>
+            </div>
+
+            <!-- 四個選項 (觸控友善 >48px) -->
+            <div id="quizOptionsContainer" class="space-y-3">
+              <!-- JS 動態生成選項按鈕 -->
+            </div>
+
+            <!-- 即時解析叮嚀盒 (答題後展現) -->
+            <div id="quizFeedbackBox" class="hidden p-5 rounded-2xl border transition-all duration-300 space-y-2">
+              <div class="flex items-center gap-2">
+                <span id="feedbackIcon" class="text-2xl">💡</span>
+                <h5 id="feedbackTitle" class="font-bold text-lg">觀念解析小叮嚀</h5>
+              </div>
+              <p id="feedbackExplanation" class="text-base leading-relaxed text-morandi-charcoal"></p>
+              <div class="pt-2 flex justify-end">
+                <button id="nextQuizBtn" onclick="goToNextQuestion()" class="px-6 py-2 rounded-xl bg-morandi-sage text-white font-bold hover:bg-morandi-sageDark transition shadow-sm">
+                  下一題 ➜
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 10題完成結算看板 (預設隱藏) -->
+          <div id="quizSummaryBoard" class="hidden bg-morandi-bg p-8 rounded-3xl border-2 border-morandi-sage text-center space-y-5">
+            <span class="text-5xl">🏆</span>
+            <h3 class="edu-title text-3xl font-black text-morandi-charcoal">挑戰完成！成績總結算</h3>
+            <div class="text-5xl font-black text-morandi-pinkDark">
+              <span id="finalScoreVal">100</span> <span class="text-2xl text-stone-600">分</span>
+            </div>
+            <div id="finalBadgeTitle" class="text-2xl font-bold text-morandi-blueDark">
+              榮獲稱號：【巔峰大作家】
+            </div>
+            <p id="finalSummaryComment" class="text-base text-stone-700 max-w-lg mx-auto leading-relaxed">
+              太厲害了！你對江秀真的毅力故事與寫作架構了然於胸，無論是修辭、轉折還是段落呼應都難不倒你！
+            </p>
+            <div class="pt-2">
+              <button onclick="resetFullQuiz()" class="px-8 py-3 rounded-2xl bg-morandi-sage text-white text-lg font-bold hover:bg-morandi-sageDark transition shadow-md">
+                🔄 再挑戰一次（重置測驗）
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 頁尾署名與版權資訊 -->
+  <footer class="w-full bg-morandi-card border-t border-morandi-border py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-sm text-stone-500 gap-2">
+      <div class="flex items-center space-x-2">
+        <span>© 四年級國語文互動寫作教材 · 單元《攀登生命的高峰》</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="px-3 py-0.5 rounded-full bg-morandi-bg border border-morandi-border text-morandi-charcoal font-semibold">
+          國小教育創新專案 · 設計執教：陳佳釧老師
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 自訂提示視窗 (取代原生 alert) -->
+  <div id="customToast" class="fixed bottom-6 right-6 z-50 bg-morandi-charcoal text-white px-5 py-3 rounded-2xl shadow-xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 max-w-sm pointer-events-none">
+    <span id="toastIcon" class="text-xl">✨</span>
+    <span id="toastMsg" class="text-sm font-medium"></span>
+  </div>
+
+  <!-- 滿版紙花特效畫布 -->
+  <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
+
+  <script>
+    /* =====================================================================
+       1. 音效引擎：Web Audio API 程式化合成清脆短促音效 (離線即用)
+       ===================================================================== */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const now = audioCtx.currentTime;
+
+      if (type === 'click') {
+        // 清脆點擊木質/啵啵聲
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else if (type === 'correct') {
+        // 答對和弦音 (大三和弦)
+        const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+        notes.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + i * 0.06);
+          gain.gain.setValueAtTime(0.2, now + i * 0.06);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.35);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.06);
+          osc.stop(now + i * 0.06 + 0.35);
+        });
+      } else if (type === 'wrong') {
+        // 答錯溫和提示音 (下行滑音)
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(260, now);
+        osc.frequency.linearRampToValueAtTime(180, now + 0.25);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'celebrate') {
+        // 登頂或結算勝利號角
+        const fanfare = [523.25, 659.25, 783.99, 1046.5];
+        fanfare.forEach((f, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, now + i * 0.12);
+          gain.gain.setValueAtTime(0.3, now + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.4);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.12);
+          osc.stop(now + i * 0.12 + 0.4);
+        });
+      }
+    }
+
+    // 自訂替代 alert 的 Toast 彈窗
+    function showToast(message, icon = '✨') {
+      const toast = document.getElementById('customToast');
+      document.getElementById('toastMsg').innerText = message;
+      document.getElementById('toastIcon').innerText = icon;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3000);
+    }
+
+    // 頂部導航列折疊/展開切換
+    let isNavCollapsed = false;
+    function toggleNavCollapse() {
+      isNavCollapsed = !isNavCollapsed;
+      const navContainer = document.getElementById('navBarContainer');
+      const toggleText = document.getElementById('navToggleText');
+      const toggleIcon = document.getElementById('navToggleIcon');
+      if (isNavCollapsed) {
+        navContainer.classList.add('hidden');
+        toggleText.innerText = '展開選單';
+        toggleIcon.innerText = '🔽';
+      } else {
+        navContainer.classList.remove('hidden');
+        toggleText.innerText = '精簡視窗';
+        toggleIcon.innerText = '🔼';
+      }
+      playSound('click');
+    }
+
+    // 主頁籤切換
+    function switchTab(tabId) {
+      playSound('click');
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-morandi-sage', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-morandi-bg', 'text-morandi-charcoal');
+      });
+
+      const currentContent = document.getElementById(`tab-${tabId}`);
+      if (currentContent) currentContent.classList.remove('hidden');
+
+      const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-morandi-sage', 'text-white', 'shadow-sm');
+        activeBtn.classList.remove('bg-morandi-bg', 'text-morandi-charcoal');
+      }
+
+      if (tabId === 'interactive') {
+        renderWheel();
+      }
+    }
+
+    /* =====================================================================
+       2. 課文標記與心得便利貼 (Highlighter & Sticky Notes)
+       ===================================================================== */
+    let currentTool = 'hl-yellow';
+
+    function setAnnotateMode(tool) {
+      playSound('click');
+      currentTool = tool;
+      document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('ring-2', 'ring-morandi-charcoal'));
+      const activeToolBtn = document.getElementById(`tool-${tool}`);
+      if (activeToolBtn) activeToolBtn.classList.add('ring-2', 'ring-morandi-charcoal');
+      showToast(`已切換為：${tool === 'underline' ? '波浪底線' : '螢光筆標記'}`);
+    }
+
+    function applyAnnotationToSelection() {
+      const selection = window.getSelection();
+      if (!selection.rangeCount || selection.isCollapsed) {
+        showToast('請先用滑鼠或手指選取課文中的一段文字！', '⚠️');
+        return;
+      }
+      const range = selection.getRangeAt(0);
+      const container = document.getElementById('readingTextContent');
+
+      // 檢查是否選取在課文內
+      if (!container.contains(range.commonAncestorContainer)) {
+        showToast('請選取課文框內的文字進行重點劃記！', '⚠️');
+        return;
+      }
+
+      const span = document.createElement('span');
+      if (currentTool === 'underline') {
+        span.className = 'mark-underline';
+      } else {
+        span.className = currentTool;
+      }
+
+      try {
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+        selection.removeAllRanges();
+        playSound('click');
+        showToast('標記完成！', '🖍️');
+      } catch (e) {
+        showToast('選取範圍跨越段落，請在同一段落內選取劃線！', '⚠️');
+      }
+    }
+
+    function clearTextAnnotations() {
+      playSound('click');
+      const originalHTML = `
+        <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="1">
+          <span class="font-bold text-morandi-pinkDark mr-2">【第一段】</span>這位被稱為「最接近天空的女子」，站在一片雪白的山前開朗的笑著。她是臺灣第一位登上珠穆朗瑪峰的女子，也是臺灣首位成功登上世界七頂峰的女登山家──江秀真。
+        </p>
+        <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="2">
+          <span class="font-bold text-morandi-pinkDark mr-2">【第二段】</span>江秀真從高中開始就喜歡登山，當她站上山頂，瞭望著千變萬化的美景，就不知不覺的愛上了山。沉靜的高山就像母親一樣，時而溫暖的擁抱著她，時而冷酷的磨練著她。眼前壯麗的美景，帶給她擁抱世界的歡樂，也帶給她實現自我的成就感。
+        </p>
+        <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="3">
+          <span class="font-bold text-morandi-pinkDark mr-2">【第三段】</span>在攀登完臺灣八十多座高山後，江秀真決定迎向世界最高峰──珠穆朗瑪峰。為了完成這個目標，她每天跑步十公里，每星期進行三天的低氧訓練。在西元一九九五年五月，她正式向世界最高峰出發。
+        </p>
+        <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="4">
+          <span class="font-bold text-morandi-pinkDark mr-2">【第四段】</span>這段辛苦的過程是旁人無法體會的。江秀真踩著沉重的腳步，冒著隨時可能跌落谷底的危險，緩緩前進。她頂著呼呼作響的寒風，忍受五十多度的日夜溫差。登上頂峰的最後一段路，是她生命中最大的難關。
+        </p>
+        <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="5">
+          <span class="font-bold text-morandi-pinkDark mr-2">【第五段】</span>當時，她的體力早已用盡，到底是要努力前進，還是要放棄？當她不知所措時，眼前閃過登頂的畫面，那股成功的渴望鼓舞著她。最後，她鼓起勇氣，排除重重難關，終於踏上世界的頂峰。
+        </p>
+        <p class="paragraph-box p-3 rounded-xl hover:bg-morandi-bg/80 transition cursor-text" data-para="6">
+          <span class="font-bold text-morandi-pinkDark mr-2">【第六段】</span>從鄉野的一座小山出發，迎向世界的頂峰，無論眼前的山路有多危險，江秀真始終踩著勇氣與決心的腳步，一步步攀登生命裡的每一座高峰。
+        </p>`;
+      document.getElementById('readingTextContent').innerHTML = originalHTML;
+      showToast('已清除所有標記痕跡！', '🧹');
+    }
+
+    let noteCount = 1;
+    function addStickyNote() {
+      playSound('click');
+      noteCount++;
+      const container = document.getElementById('stickyNotesContainer');
+      const note = document.createElement('div');
+      const rot = (Math.random() * 4 - 2).toFixed(1);
+      note.className = 'sticky-note bg-amber-100 border-2 border-amber-300 rounded-2xl p-4 shadow-md relative transition';
+      note.style.transform = `rotate(${rot}deg)`;
+      note.innerHTML = `
+        <div class="flex items-center justify-between pb-2 border-b border-amber-200 mb-2">
+          <span class="text-xs font-bold text-amber-800">📌 閱讀筆記 ${noteCount}</span>
+          <button onclick="this.closest('.sticky-note').remove()" class="text-amber-700 hover:text-red-600 text-sm font-bold">✕</button>
+        </div>
+        <textarea class="w-full bg-transparent border-none focus:outline-none text-amber-950 resize-none text-base h-24" placeholder="輸入我的閱讀反思..."></textarea>
+      `;
+      container.appendChild(note);
+      showToast('已新增便利貼！', '📝');
+    }
+
+    function exportReadingCapture() {
+      playSound('click');
+      showToast('正在產生高畫質課文學習筆記圖片...', '📸');
+      const target = document.getElementById('readingCaptureZone');
+      html2canvas(target, { scale: 2, backgroundColor: '#FCFAF7' }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `攀登生命的高峰_課文標註筆記_陳佳釧老師班級.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        playSound('celebrate');
+        showToast('筆記圖片已下載完成！', '🎉');
+      }).catch(err => {
+        showToast('匯出失敗，請手動截圖保存！', '⚠️');
+      });
+    }
+
+    /* =====================================================================
+       3. 寫作五關階梯工坊邏輯
+       ===================================================================== */
+    // 各名人的靈感詞庫與短句資料庫（精簡語詞與短句，非死板長句）
+    const HERO_DATA_MAP = {
+      jiang: {
+        id: 'jiang',
+        name: '女登山家 江秀真',
+        shortName: '江秀真',
+        spirit: '堅持到底與勇於攀登夢想的勇氣',
+        grid: [
+          "最接近天空的女子、臺灣首位登聖母峰女性",
+          "挑戰珠穆朗瑪峰、迎向世界之巔",
+          "每天長跑十公里、每週三天低氧耐力訓練",
+          "深谷懸崖、失足危險、五十多度劇烈溫差",
+          "狂風呼呼作響、冰天雪地、刺骨寒冷",
+          "體力耗盡、瀕臨極限、放棄與前進的拉扯",
+          "渴望成功的力量、咬緊牙關、踏上世界屋脊",
+          "始終踩著勇氣與決心的腳步、攀登生命高峰",
+          "跑步想停下或遇數學難題時，多堅持跨出一步"
+        ],
+        phrases: {
+          p1: ['最接近天空的女子', '首位女性登頂者', '自信開朗的笑容', '世界最高峰'],
+          p2: ['千變萬化', '如母親般溫暖又冷酷', '不知不覺', '自律堅持', '低氧訓練'],
+          p3: ['呼呼作響的寒風', '五十度日夜溫差', '失足深谷的危險', '體力早已用盡', '成功的渴望'],
+          p4: ['攀登生命的高峰', '勇氣與決心的腳步', '迎向挑戰', '不輕易退縮', '戰勝困難']
+        },
+        draft: {
+          p1: "這位被稱為「最接近天空的女子」，站在一片白雪皚皚的山脈前，臉上帶著開朗而自信的笑容。她就是臺灣第一位登上珠穆朗瑪峰，更是首位成功攀登世界七頂峰的傑出女登山家──江秀真。",
+          p2: "江秀真從高中開始就深深愛上大山。沉靜的高山就像母親一樣，時而溫暖的擁抱她，時而冷酷的磨練她。在攀登完臺灣八十多座高山後，她決定向世界最高峰前進。為了這項艱鉅的考驗，她日復一日跑步十公里，每週更堅持三天痛苦的低氧訓練，用超人的自律打磨體能。",
+          p3: "通往世界頂峰的最後一段路，是她生命中最大的難關。刺骨的寒風呼呼作響，日夜溫差高達五十多度，每跨出一步都伴隨著隨時跌落谷底的危險。當時她的體力早已耗盡，在痛苦與掙扎中，她眼前閃過登頂的畫面，那股對成功的強烈渴望化作勇氣，讓她咬緊牙關排除萬難，終於踏上了世界之巔！",
+          p4: "從鄉野小山到世界的屋脊，江秀真告訴我們：人生就如同攀登一座座高峰。每當我在課業上遇到解不開的數學題或是想放棄跑步時，她的背影總會鼓舞著我。我也要踩著決心與勇氣的腳步，努力攀登屬於我生命裡的每一座高峰！"
+        }
+      },
+      tai: {
+        id: 'tai',
+        name: '羽球球后 戴資穎',
+        shortName: '戴資穎',
+        spirit: '永不放棄、每一次揮拍都全力以赴的拚勁',
+        grid: [
+          "世界羽球球后、靈巧多變的球場精靈",
+          "站上奧運殿堂、為臺灣奪下榮耀",
+          "每天揮拍上千次、反覆折返跑、無數汗水",
+          "強敵壓迫、比分落後、身上新舊傷痛",
+          "球鞋磨擦地板的尖銳聲、心跳如擂鼓、掌心汗水",
+          "落後陷入苦戰、內心急躁卻提醒自己要沉著",
+          "刁鑽假動作、沉著冷靜、一分一分咬牙追趕",
+          "永不服輸、只要球沒落地就絕不放棄",
+          "在練習寫字或體育跑步很累時，像小戴一樣拚到最後一秒"
+        ],
+        phrases: {
+          p1: ['世界羽球球后', '球場上的精靈', '台灣之光', '沉著自信的眼神'],
+          p2: ['反覆揮拍上千次', '揮汗如雨', '折返跑耐力', '嚴格自律', '苦練基本功'],
+          p3: ['刁鑽致命的假動作', '比分落後的逆境', '傷痛纏身', '沉著冷靜', '頑強反撲'],
+          p4: ['永不言敗的精神', '全力以赴的拚勁', '球沒落地絕不放棄', '在自己的人生球場發光']
+        },
+        draft: {
+          p1: "在羽毛球場上，她有著「球場精靈」的美名，眼神銳利而堅定。她就是曾長年穩坐世界排名第一、為臺灣奪下無數國際獎牌的羽球球后──戴資穎。",
+          p2: "戴資穎從小就握起球拍，將球場當成自己的遊樂場。然而，要在世界舞台上脫穎而出，背後靠的是驚人的自律。她日復一日在球場上來回折返跑，每天揮拍上千次，身上的球衣濕了又乾、乾了又濕，練就了結實的核心肌群與神乎其技的控球手法。",
+          p3: "在國際大賽的決賽舞台上，面對高大兇悍的對手，她一度比分大幅落後。疲憊與壓力排山倒海而來，但她沒有慌亂，只是擦擦汗水、沉著吐氣。憑著刁鑽犀利的假動作與一顆不服輸的心，她咬緊牙關一分一分追趕，終於逆轉戰局，贏得最後的勝利！",
+          p4: "戴資穎常說：「只要球還沒落地，就要全力去救！」這句話深深烙印在我的心中。每當我寫作業遇到困難想偷懶時，我就會想起她在球場上奮不顧身撲救的英姿，提醒自己也要用全力以赴的拚勁，打好人生每一場球！"
+        }
+      },
+      wu: {
+        id: 'wu',
+        name: '世界麵包冠軍 吳寶春',
+        shortName: '吳寶春',
+        spirit: '苦練不懈、用雙手揉出生命香氣的匠人精神',
+        grid: [
+          "世界麵包大師賽冠軍、刻苦自學的烘焙師",
+          "讓臺灣農產品登上國際、做出世界第一的麵包",
+          "清晨揉麵糰、手掌磨出厚繭、字典不離手補足學歷",
+          "麵糰發酵失敗、高溫烤爐燙傷、語言不通的挫折",
+          "烤箱飄出的麥香、汗水滴在麵糰旁、烤爐熱浪逼人",
+          "無數次失敗想放棄、想起母親在鳳梨田烈日下的背影",
+          "加入荔枝乾與小米酒、咬牙苦練、奪得巴黎世界桂冠",
+          "一輩子專心做好一件事、用雙手揉出生命香氣",
+          "學習雖然辛苦，我也要像他一樣腳踏實地、不怕吃苦"
+        ],
+        phrases: {
+          p1: ['世界麵包冠軍', '樸實謙虛的匠人', '台灣之光', '揉出夢想的推手'],
+          p2: ['清晨三點的烤箱', '手掌滿是厚繭', '反覆揉捏', '刻苦自學', '對品質的堅持'],
+          p3: ['發酵失敗的沮喪', '滾燙熱浪的考驗', '想起母親的身影', '注入滿滿的愛', '飄散誘人麥香'],
+          p4: ['揉出生命的香氣', '腳踏實地的匠人精神', '不怕吃苦', '專注做好一件事']
+        },
+        draft: {
+          p1: "戴著白色高挺的廚師帽，臉上帶著樸實憨厚的笑容，他用一雙長滿厚繭的雙手，在法國巴黎拿下世界麵包大師賽冠軍，他就是家喻戶曉的麵包師傅──吳寶春。",
+          p2: "吳寶春從小家境清寒，為了減輕母親的負擔，十幾歲就北上當麵包學徒。在大家熟睡的凌晨三點，他就已經站在工作檯前揉麵糰。由於識字不多，他一邊揉麵一邊翻查字典，即使雙手被烤箱燙出一道道傷疤，他也從不喊苦，一心只想做出最完美的麵包。",
+          p3: "在研發冠軍麵包的漫長歲月裡，他經歷了無數次發酵失敗與口味不合的打擊。每當灰心想放棄時，他眼前總會浮現母親在烈日下辛苦採鳳梨的背影。那份對母親的愛激勵著他，他大膽將臺灣在地食材融入歐式麵包，經過千百次調整，終於烤出色澤金黃、香氣濃郁的傳奇麵包！",
+          p4: "吳寶春的故事讓我明白：出身並不能限制一個人，只要肯腳踏實地、不怕吃苦，就能揉出屬於自己的生命香氣。今後每當我在學習上遇到瓶頸時，我也要像吳寶春一樣，帶著耐心與毅力，把每件小事做到極致！"
+        }
+      },
+      edison: {
+        id: 'edison',
+        name: '發明大王 愛迪生',
+        shortName: '愛迪生',
+        spirit: '歷經上千次失敗依然充滿好奇心與堅持',
+        grid: [
+          "世界聞名的發明大王、擁有上千項專利的科學家",
+          "發明耐用的白熾電燈、驅散黑暗照亮全世界",
+          "試驗數千種材料、廢寢忘食泡在實驗室、連續工作幾十小時",
+          "實驗室起火爆炸、上千次失敗、外界的冷嘲熱諷",
+          "刺鼻的化學藥劑味、燈絲燒斷的微弱青煙、深夜鐘聲",
+          "試驗材料屢屢燒毀、助手感到絕望時他依然雙眼發亮",
+          "找到炭化竹絲、點亮持續四十多小時的奇蹟之光",
+          "失敗是成功之母、天才是百分之一靈感加上九十九分汗水",
+          "考試成績不理想時，不氣餒而找出問題所在再試一次"
+        ],
+        phrases: {
+          p1: ['發明大王', '點亮世界的先驅', '好奇心旺盛', '偉大的發明家'],
+          p2: ['廢寢忘食的實驗', '成千上萬次嘗試', '汗水與心血', '探究到底', '堅定的信念'],
+          p3: ['材料屢次燒斷', '旁人的冷嘲熱諷', '煙霧瀰漫的實驗室', '失敗只是排除錯誤', '綻放耀眼光芒'],
+          p4: ['失敗是成功之母', '九十九分的汗水', '永不熄滅的熱情', '勇敢面對未知']
+        },
+        draft: {
+          p1: "每當夜幕低垂，我們隨手按下開關，房間便充滿了溫暖的光明。這份便利，要歸功於那位留著白髮、眼神中永遠閃爍著好奇光芒的「發明大王」──愛迪生。",
+          p2: "小時候被老師認為不聰明的愛迪生，卻對世間萬物充滿了探索的渴望。為了發明能長時間發光的電燈，他幾乎把實驗室當成了家。他日以繼夜翻閱資料，親自試驗了幾千種耐熱材料，無論是昂貴的金屬還是奇特的植物纖維，他都一種一種仔細記錄、不肯放過。",
+          p3: "在尋找燈絲的過程中，他遭遇了上千次失敗，甚至連助手都感到絕望。然而愛迪生卻笑著說：「我沒有失敗，我只是發現了幾千種不適合做燈絲的方法！」正是在這種樂觀與堅韌的信念下，他終於試驗出碳化竹絲，讓燈泡發出了持久而穩定的耀眼光芒！",
+          p4: "愛迪生用一生證明了：「天才是百分之一的靈感，加上九十九分的汗水。」從他的身上，我學到了面對挫折不低頭的勇氣。在未來的學習路上，我也要把每次犯錯當成進步的墊腳石，懷抱熱情迎向挑戰！"
+        }
+      },
+      helen: {
+        id: 'helen',
+        name: '盲聾啞學者 海倫凱勒',
+        shortName: '海倫凱勒',
+        spirit: '衝破黑暗與沉默的堅毅意志與熱愛生命的心',
+        grid: [
+          "戰勝命運的盲聾啞女作家、照亮世界的生命鬥士",
+          "學會說話與閱讀、考上大學並幫助無數身障者",
+          "觸摸嘴唇喉嚨感受振動、反覆苦練發音千百次、摸讀凸字點字",
+          "看不見也聽不見的無聲世界、無法表達想法的暴躁孤獨",
+          "掌心傳來的冰涼井水、喉嚨乾燥刺痛、手指磨破的痛楚",
+          "學習發音極度艱難、數百次聽不清楚想放棄哭泣",
+          "感悟到「水」的意義、心靈之窗豁然開啟、用手觸摸世界的美好",
+          "把活著的每一天當作生命的最後一天、永不向命運屈服",
+          "珍惜自己健康的雙眼雙耳，遇到挫折時以感恩的心全力奮鬥"
+        ],
+        phrases: {
+          p1: ['生命的奇蹟', '突破黑暗的勇者', '堅毅溫柔的笑容', '偉大的生命鬥士'],
+          p2: ['手心寫字認字', '摸讀點字書籍', '觸摸喉嚨感受振動', '不知疲倦的練習', '強烈的求知慾'],
+          p3: ['孤獨無聲的黑暗', '暴躁與挫折的眼淚', '冰涼井水的啟蒙', '咬牙苦練發音', '衝破命運的牢籠'],
+          p4: ['用愛擁抱世界', '珍惜健康的美好', '永不低頭的意志', '活出精采的人生']
+        },
+        draft: {
+          p1: "一場幼年的重病，奪走了她的視力與聽力，將她推入了無邊的黑暗與無聲的世界。然而，她卻以無比的毅力戰勝了命運，成為聞名全球的作家與慈善家，她就是令人敬佩的奇蹟女子──海倫·凱勒。",
+          p2: "在蘇利文老師的耐心引導下，海倫凱勒學會了用手心感受拼字。為了像正常人一樣開口說話，她用手指觸摸老師的嘴唇與喉嚨，反覆感受發音的震動與氣流。即使舌頭練習到僵硬痠痛，手指也摸點字摸到紅腫，她依然滿懷對知識的渴望，一遍又一遍堅持練習。",
+          p3: "在學習的路上，孤獨與挫折常常讓她感到沮喪想哭。然而，當她回想起在井邊第一次理解「水」所帶來的光明與希望，她就重拾了面對挑戰的勇氣。憑藉著驚人的意志力，她不僅順利從哈佛大學德克利夫學院畢業，更精通多國語言，將自己的生命化作照亮人心的火炬！",
+          p4: "海倫·凱勒曾說：「面對陽光，陰影就會落在身後。」這句話給了我巨大的力量。比起她所經歷的艱苦，我們所面對的困難是多麼微不足道！我要好好珍惜健全的雙眼與雙耳，像海倫凱勒一樣懷抱感恩與勇氣，用心探索這美好的世界！"
+        }
+      }
+    };
+
+    let activeHeroKey = 'jiang';
+
+    function selectHero(heroKey) {
+      playSound('click');
+      activeHeroKey = heroKey;
+      const hero = HERO_DATA_MAP[heroKey];
+      if (!hero) return;
+
+      // 更新輸入框
+      document.getElementById('targetHeroName').value = hero.name;
+      document.getElementById('targetHeroSpirit').value = hero.spirit;
+      document.getElementById('activeHeroLabel').innerText = hero.shortName;
+
+      // 切換按鈕高亮
+      document.querySelectorAll('.hero-chip').forEach(btn => {
+        btn.className = 'hero-chip px-3 py-1.5 rounded-full text-sm bg-white border border-morandi-border hover:border-morandi-sage hover:bg-morandi-sage/10 text-morandi-charcoal transition';
+      });
+      const currentBtn = document.getElementById(`heroChip-${heroKey}`);
+      if (currentBtn) {
+        currentBtn.className = 'hero-chip px-3 py-1.5 rounded-full text-sm bg-morandi-sage text-white border border-morandi-sage font-bold transition shadow-sm';
+      }
+
+      // 自動填入九宮格為該名人的靈感詞
+      populateGridsForHero(heroKey);
+
+      // 自動更新關卡四的好詞庫按鈕
+      renderPhraseBanks(heroKey);
+
+      showToast(`已套用【${hero.shortName}】專屬靈感短句與好詞庫！`, '✨');
+    }
+
+    function populateGridsForHero(heroKey) {
+      const hero = HERO_DATA_MAP[heroKey];
+      if (!hero) return;
+      hero.grid.forEach((text, idx) => {
+        const gridEl = document.getElementById(`grid-${idx + 1}`);
+        if (gridEl) {
+          gridEl.value = text;
+        }
+      });
+    }
+
+    function injectPresetGrid(id) {
+      playSound('click');
+      const hero = HERO_DATA_MAP[activeHeroKey] || HERO_DATA_MAP['jiang'];
+      document.getElementById(`grid-${id}`).value = hero.grid[id - 1];
+      showToast(`第 ${id} 格已套用【${hero.shortName}】靈感詞！`);
+    }
+
+    function renderPhraseBanks(heroKey) {
+      const hero = HERO_DATA_MAP[heroKey] || HERO_DATA_MAP['jiang'];
+      ['p1', 'p2', 'p3', 'p4'].forEach(p => {
+        const container = document.getElementById(`phraseContainer-${p}`);
+        if (!container) return;
+        container.innerHTML = '';
+        hero.phrases[p].forEach(phrase => {
+          const btn = document.createElement('button');
+          btn.className = 'px-2 py-1 bg-white hover:bg-morandi-sage/20 border border-morandi-border rounded text-xs transition';
+          btn.innerText = phrase;
+          btn.onclick = () => insertPhrase(`draft-${p}`, phrase);
+          container.appendChild(btn);
+        });
+      });
+    }
+
+    function fillExampleDraft() {
+      playSound('click');
+      const hero = HERO_DATA_MAP[activeHeroKey] || HERO_DATA_MAP['jiang'];
+      document.getElementById('draft-p1').value = hero.draft.p1;
+      document.getElementById('draft-p2').value = hero.draft.p2;
+      document.getElementById('draft-p3').value = hero.draft.p3;
+      document.getElementById('draft-p4').value = hero.draft.p4;
+      updateWordCount();
+      showToast(`已載入【${hero.shortName}】示範初稿！可依自己想法修改。`, '📝');
+    }
+
+    function switchStage(stageNum) {
+      playSound('click');
+      document.querySelectorAll('.stage-panel').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.stage-nav-btn').forEach(b => {
+        b.classList.remove('bg-morandi-sage', 'text-white');
+        b.classList.add('bg-morandi-bg', 'text-morandi-charcoal');
+      });
+
+      const panel = document.getElementById(`stage-panel-${stageNum}`);
+      if (panel) panel.classList.remove('hidden');
+
+      const btn = document.getElementById(`stageBtn-${stageNum}`);
+      if (btn) {
+        btn.classList.add('bg-morandi-sage', 'text-white');
+        btn.classList.remove('bg-morandi-bg', 'text-morandi-charcoal');
+      }
+    }
+
+    function toggleCardFlip(cardEl) {
+      playSound('click');
+      cardEl.classList.toggle('card-flipped');
+    }
+
+    function saveStage1AndNext() {
+      const hero = document.getElementById('targetHeroName').value.trim();
+      if (!hero) {
+        showToast('請先輸入或選取一位名人！', '⚠️');
+        return;
+      }
+      showToast(`主題鎖定成功！前往靈感九宮格。`, '✨');
+      switchStage(2);
+    }
+
+    // 關卡四：好詞插入游標位置
+    function insertPhrase(textareaId, text) {
+      playSound('click');
+      const textarea = document.getElementById(textareaId);
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const val = textarea.value;
+      textarea.value = val.substring(0, start) + text + val.substring(end);
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      textarea.focus();
+      updateWordCount();
+      showToast(`已插入佳句：「${text}」`);
+    }
+
+    function updateWordCount() {
+      const p1 = document.getElementById('draft-p1').value;
+      const p2 = document.getElementById('draft-p2').value;
+      const p3 = document.getElementById('draft-p3').value;
+      const p4 = document.getElementById('draft-p4').value;
+      const total = (p1 + p2 + p3 + p4).replace(/\s/g, '').length;
+      document.getElementById('totalWordCount').innerText = total;
+    }
+
+    function fillExampleDraft() {
+      playSound('click');
+      document.getElementById('draft-p1').value = "這位被稱為「最接近天空的女子」，站在一片白雪皚皚的山脈前，臉上帶著開朗而自信的笑容。她就是臺灣第一位登上珠穆朗瑪峰，更是首位成功攀登世界七頂峰的傑出女登山家──江秀真。";
+      document.getElementById('draft-p2').value = "江秀真從高中開始就深深愛上大山。沉靜的高山就像母親一樣，時而溫暖的擁抱她，時而冷酷的磨練她。在攀登完臺灣八十多座高山後，她決定向世界最高峰前進。為了這項艱鉅的考驗，她日復一日跑步十公里，每週更堅持三天痛苦的低氧訓練，用超人的自律打磨體能。";
+      document.getElementById('draft-p3').value = "通往世界頂峰的最後一段路，是她生命中最大的難關。刺骨的寒風呼呼作響，日夜溫差高達五十多度，每跨出一步都伴隨著隨時跌落谷底的危險。當時她的體力早已耗盡，在痛苦與掙扎中，她眼前閃過登頂的畫面，那股對成功的強烈渴望化作勇氣，讓她咬緊牙關排除萬難，終於踏上了世界之巔！";
+      document.getElementById('draft-p4').value = "從鄉野小山到世界的屋脊，江秀真告訴我們：人生就如同攀登一座座高峰。每當我在課業上遇到解不開的數學題或是想放棄跑步時，她的背影總會鼓舞著我。我也要踩著決心與勇氣的腳步，努力攀登屬於我生命裡的每一座高峰！";
+      updateWordCount();
+      showToast('已載入示範全文初稿！可依自己想法修改。', '📝');
+    }
+
+    function assembleAndGoStage5() {
+      playSound('click');
+      const p1 = document.getElementById('draft-p1').value.trim();
+      const p2 = document.getElementById('draft-p2').value.trim();
+      const p3 = document.getElementById('draft-p3').value.trim();
+      const p4 = document.getElementById('draft-p4').value.trim();
+
+      if (!p1 && !p2 && !p3 && !p4) {
+        fillExampleDraft();
+      }
+
+      const fullP1 = document.getElementById('draft-p1').value;
+      const fullP2 = document.getElementById('draft-p2').value;
+      const fullP3 = document.getElementById('draft-p3').value;
+      const fullP4 = document.getElementById('draft-p4').value;
+      const hero = document.getElementById('targetHeroName').value.trim() || '江秀真';
+
+      document.getElementById('finalEssayTitle').innerText = `值得我學習的名人──攀登高峰的${hero}`;
+
+      const fullContainer = document.getElementById('finalFullText');
+      fullContainer.innerHTML = `
+        <p class="leading-loose mb-3">${fullP1}</p>
+        <p class="leading-loose mb-3">${fullP2}</p>
+        <p class="leading-loose mb-3">${fullP3}</p>
+        <p class="leading-loose mb-3">${fullP4}</p>
+      `;
+
+      switchStage(5);
+      showToast('恭喜！文章已組裝成功！', '🎉');
+      playSound('correct');
+    }
+
+    function copyFullEssayText() {
+      playSound('click');
+      const title = document.getElementById('finalEssayTitle').innerText;
+      const p1 = document.getElementById('draft-p1').value;
+      const p2 = document.getElementById('draft-p2').value;
+      const p3 = document.getElementById('draft-p3').value;
+      const p4 = document.getElementById('draft-p4').value;
+      const full = `${title}\n指導教師：陳佳釧老師\n\n${p1}\n\n${p2}\n\n${p3}\n\n${p4}`;
+
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = full;
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempTextArea);
+
+      showToast('已成功複製全文至剪貼簿！', '📋');
+    }
+
+    function exportEssayImage() {
+      playSound('click');
+      showToast('正在將作文排版繪製為成果圖片...', '🖼️');
+      const exportTarget = document.getElementById('finalEssayExportArea');
+      html2canvas(exportTarget, { scale: 2, backgroundColor: '#F5F2EB' }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `值得我學習的名人_作文成果_陳佳釧老師班級.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        playSound('celebrate');
+        showToast('作品圖片已順利下載！', '🏆');
+      }).catch(e => {
+        showToast('匯出失敗，請手動列印或截圖保存！', '⚠️');
+      });
+    }
+
+    /* =====================================================================
+       4. 互動特訓小遊戲：事件順序排列 + 登頂能量輪盤
+       ===================================================================== */
+    const orderEvents = [
+      { id: 1, text: "在高中時期愛上登山，爬完臺灣八十多座百岳。", rank: 1 },
+      { id: 2, text: "立下攀登聖母峰宏願，每天跑步十公里與低氧訓練。", rank: 2 },
+      { id: 3, text: "頂著狂風與五十度溫差，在體力用盡時克服想放棄的念頭。", rank: 3 },
+      { id: 4, text: "踏上珠穆朗瑪峰頂峰，成為臺灣第一位登頂女性。", rank: 4 }
+    ];
+
+    let currentOrderState = [];
+
+    function resetOrderGame() {
+      // 隨機打亂
+      currentOrderState = [...orderEvents].sort(() => Math.random() - 0.5);
+      renderOrderCards();
+      document.getElementById('orderResultMsg').innerText = '';
+    }
+
+    function renderOrderCards() {
+      const container = document.getElementById('sortableListContainer');
+      container.innerHTML = '';
+      currentOrderState.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'flex items-center justify-between p-3.5 bg-white rounded-xl border border-morandi-border shadow-sm';
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-morandi-sand/40 text-morandi-charcoal font-bold flex items-center justify-center text-sm">${index + 1}</span>
+            <span class="text-base text-morandi-charcoal">${item.text}</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="moveOrderItem(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 p-1.5"' : 'class="p-1.5 hover:bg-stone-100 rounded text-stone-600"'} title="上移">⬆</button>
+            <button onclick="moveOrderItem(${index}, 1)" ${index === currentOrderState.length - 1 ? 'disabled class="opacity-30 p-1.5"' : 'class="p-1.5 hover:bg-stone-100 rounded text-stone-600"'} title="下移">⬇</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function moveOrderItem(index, direction) {
+      playSound('click');
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= currentOrderState.length) return;
+      const temp = currentOrderState[index];
+      currentOrderState[index] = currentOrderState[targetIndex];
+      currentOrderState[targetIndex] = temp;
+      renderOrderCards();
+    }
+
+    function checkOrderAnswer() {
+      const isCorrect = currentOrderState.every((item, idx) => item.rank === idx + 1);
+      const msg = document.getElementById('orderResultMsg');
+      if (isCorrect) {
+        playSound('correct');
+        msg.className = 'text-base font-bold text-emerald-700';
+        msg.innerText = '🎉 太棒了！順序完全正確，掌握了起承轉合的先後脈絡！';
+      } else {
+        playSound('wrong');
+        msg.className = 'text-base font-bold text-rose-600';
+        msg.innerText = '💡 還差一點點喔！請回想課文中江秀真「熱愛➜訓練➜考驗➜登頂」的經歷再試一次！';
+      }
+    }
+
+    // 登頂能量挑戰輪盤 (HTML5 Canvas)
+    let altitude = 0;
+    const targetAltitude = 8848;
+    const wheelSegments = [
+      { text: '+800m 勇氣奔跑', alt: 800, color: '#8A9A86' },
+      { text: '+1200m 克服低氧', alt: 1200, color: '#7A8B99' },
+      { text: '+500m 忍受寒風', alt: 500, color: '#C59B8B' },
+      { text: '+1500m 渴望力量', alt: 1500, color: '#D9CEB2' },
+      { text: '+600m 穩步前進', alt: 600, color: '#8A9A86' },
+      { text: '+2000m 咬緊牙關', alt: 2000, color: '#7A8B99' }
+    ];
+    let wheelAngle = 0;
+    let isSpinning = false;
+
+    function renderWheel() {
+      const canvas = document.getElementById('wheelCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const numSegments = wheelSegments.length;
+      const arc = (2 * Math.PI) / numSegments;
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const r = cx - 4;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      wheelSegments.forEach((seg, i) => {
+        const angle = wheelAngle + i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = seg.color;
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, angle, angle + arc);
+        ctx.lineTo(cx, cy);
+        ctx.fill();
+        ctx.stroke();
+
+        // 文字
+        ctx.save();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 12px serif';
+        ctx.translate(cx, cy);
+        ctx.rotate(angle + arc / 2);
+        ctx.textAlign = 'right';
+        ctx.fillText(seg.text, r - 12, 4);
+        ctx.restore();
+      });
+
+      // 中心圓心裝飾
+      ctx.beginPath();
+      ctx.arc(cx, cy, 22, 0, 2 * Math.PI);
+      ctx.fillStyle = '#383634';
+      ctx.fill();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 10px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('毅力', cx, cy + 4);
+    }
+
+    function spinClimbingWheel() {
+      if (isSpinning) return;
+      if (altitude >= targetAltitude) {
+        showToast('已經成功征服 8848m 世界頂峰！請重置再次挑戰。', '🏆');
+        return;
+      }
+      isSpinning = true;
+      playSound('click');
+      document.getElementById('spinWheelBtn').disabled = true;
+
+      const randomSpin = Math.PI * 4 + Math.random() * Math.PI * 2;
+      const duration = 2400;
+      const startTime = performance.now();
+      const startAngle = wheelAngle;
+
+      function animateSpin(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutCubic
+        const ease = 1 - Math.pow(1 - progress, 3);
+        wheelAngle = startAngle + randomSpin * ease;
+        renderWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateSpin);
+        } else {
+          isSpinning = false;
+          document.getElementById('spinWheelBtn').disabled = false;
+          // 計算落點
+          const numSegments = wheelSegments.length;
+          const arc = (2 * Math.PI) / numSegments;
+          // 指針在頂端 (-Math.PI / 2)
+          let normalized = (-Math.PI / 2 - wheelAngle) % (2 * Math.PI);
+          if (normalized < 0) normalized += 2 * Math.PI;
+          const selectedIdx = Math.floor(normalized / arc);
+          const chosen = wheelSegments[selectedIdx];
+
+          altitude = Math.min(altitude + chosen.alt, targetAltitude);
+          updateAltitudeDisplay(chosen);
+        }
+      }
+      requestAnimationFrame(animateSpin);
+    }
+
+    function updateAltitudeDisplay(chosen) {
+      document.getElementById('currentAltitude').innerText = altitude;
+      const percent = (altitude / targetAltitude) * 100;
+      document.getElementById('altitudeProgress').style.width = `${percent}%`;
+
+      const statusEl = document.getElementById('wheelStatusText');
+      if (altitude >= targetAltitude) {
+        playSound('celebrate');
+        triggerConfettiEffect();
+        statusEl.innerHTML = `<span class="text-rose-600 font-bold">🎉 恭喜踏上 8848 公尺珠穆朗瑪峰之巔！像江秀真一樣實現夢想！</span>`;
+      } else {
+        playSound('correct');
+        statusEl.innerHTML = `獲得 <span class="font-bold text-morandi-pinkDark">${chosen.text}</span>！離頂峰還差 ${targetAltitude - altitude} 公尺！`;
+      }
+    }
+
+    function resetAltitudeGame() {
+      playSound('click');
+      altitude = 0;
+      document.getElementById('currentAltitude').innerText = '0';
+      document.getElementById('altitudeProgress').style.width = '0%';
+      document.getElementById('wheelStatusText').innerText = '點擊按鈕轉動勇氣輪盤，克服低氧與寒風考驗！';
+    }
+
+    /* =====================================================================
+       5. 終點成效檢核：精準 10 題互動測驗完整實作
+       ===================================================================== */
+    const quizQuestions = [
+      {
+        category: "課文事實與人物成就",
+        prompt: "根據課文第一段，江秀真被稱為什麼？她創造了臺灣登山史上的哪一項殊榮？",
+        options: [
+          "「最喜愛花草的女子」，第一位登上玉山的女植物學家",
+          "「最接近天空的女子」，第一位登上珠穆朗瑪峰的女性",
+          "「奔跑在雲端的飛羚」，第一位完成環島馬拉松的女選手",
+          "「雪山守護者」，第一位攀登雪山八十次的女嚮導"
+        ],
+        answer: 1,
+        explanation: "課文第一段明確提到：江秀真被稱為「最接近天空的女子」，她是臺灣首位登上世界最高峰──珠穆朗瑪峰的女登山家。"
+      },
+      {
+        category: "修辭手法辨析",
+        prompt: "課文中寫道：「沉靜的高山就像母親一樣，時而溫暖的擁抱著她，時而冷酷的磨練著她。」這句話運用了哪兩種修辭手法？",
+        options: [
+          "排比與誇飾",
+          "設問與頂真",
+          "譬喻與擬人",
+          "對偶與借代"
+        ],
+        answer: 2,
+        explanation: "將沉靜高山比喻為「母親」是譬喻修辭；賦予高山「擁抱」與「磨練」的動作神態，則是生動的擬人手法。"
+      },
+      {
+        category: "生活自律與準備細節",
+        prompt: "為了完成登上世界最高峰的目標，江秀真在出發前進行了哪些嚴格的體能訓練？",
+        options: [
+          "每天游泳三千公尺，每星期進行攀岩訓練",
+          "每天跑步十公里，每星期進行三天的低氧訓練",
+          "每個月攀登三座百岳，每天做兩百下伏地挺身",
+          "每天騎腳踏車五十公里，每星期禁食一天以適應惡劣環境"
+        ],
+        answer: 1,
+        explanation: "課文第三段載明：「她每天跑步十公里，每星期進行三天的低氧訓練」，展現無比自律的準備功夫。"
+      },
+      {
+        category: "寫作手法與感官摹寫",
+        prompt: "課文第四段提到：「她頂著呼呼作響的寒風，忍受五十多度的日夜溫差。」這裡運用了什麼感官描寫來凸顯環境的險峻？",
+        options: [
+          "視覺與味覺",
+          "聽覺（呼呼作響）與觸覺／溫覺（日夜溫差）",
+          "嗅覺與聽覺",
+          "只有視覺描寫"
+        ],
+        answer: 1,
+        explanation: "「呼呼作響」是聽覺摹寫，「寒風、日夜溫差」使人感受到刺骨溫度，屬於觸覺／溫覺摹寫，讓讀者感同身受。"
+      },
+      {
+        category: "心理轉折與文意深究",
+        prompt: "第五段中，江秀真「體力早已用盡，不知所措」時，是什麼力量支撐她排除萬難、堅持登頂？",
+        options: [
+          "嚮導在後方不斷催促與責怪",
+          "眼前閃過登頂的畫面，心中對成功的渴望鼓舞了她",
+          "她想起自己答應要帶回山頂的奇石做紀念",
+          "因為天氣突然轉晴，讓她感到輕鬆好走"
+        ],
+        answer: 1,
+        explanation: "課文第五段敘述：「眼前閃過登頂的畫面，那股成功的渴望鼓舞著她」，這是她戰勝極限、化解內心猶豫的關鍵心理轉折！"
+      },
+      {
+        category: "文章結構與象徵意涵",
+        prompt: "課文最後一段：「一步步攀登生命裡的每一座高峰」，句中的「每一座高峰」真正象徵的是什麼？",
+        options: [
+          "臺灣所有超過三千公尺的高山",
+          "世界各大洲的地理最高山脈",
+          "人生中面對的各種困難、考驗與自我實現的夢想",
+          "登山比賽中獲得的各種金牌與獎盃"
+        ],
+        answer: 2,
+        explanation: "作者在此將自然界實體的高山，昇華為「人生中每段面對艱難挑戰、實現生命目標的歷程」，富含人生哲理。"
+      },
+      {
+        category: "寫作審題與取材技巧",
+        prompt: "如果要寫一篇「值得我學習的名人」，下列哪一種選材方式最能吸引讀者並感動人心？",
+        options: [
+          "把名人的出生年月日、家庭成員與就讀學校鉅細靡遺抄寫一遍",
+          "只寫名人獲得多少獎金與榮譽，不必提及他遭遇過什麼困難",
+          "聚焦在名人的核心特質，透過具體刻苦的事件描寫其克服挫折的過程，並連結自身反思",
+          "直接抄寫維基百科的生平年表，文字越長分數越高"
+        ],
+        answer: 2,
+        explanation: "記敘人物不可寫成流水帳，應「夾敘夾議、以事顯人」，挑選最具代表性的挑戰經歷，並加入自己的體悟。"
+      },
+      {
+        category: "詞語理解與遣詞造句",
+        prompt: "課文第六段中「無論眼前的山路有多危險，江秀真始終踩著勇氣與決心的腳步」，句中「始終」的意思最接近下列哪一個詞？",
+        options: [
+          "偶爾",
+          "從頭到尾一直",
+          "剛開始的時候",
+          "在最後一刻"
+        ],
+        answer: 1,
+        explanation: "「始終」表示從開始到結束都未曾改變，強調江秀真由始至終堅定不移的意志。"
+      },
+      {
+        category: "寫作結構佈局",
+        prompt: "本課範文在段落架構上採用了哪種經典的記敘文架構？",
+        options: [
+          "倒敘法（先寫結果，再回想童年）",
+          "總—分—分—總（首段點題亮出榮耀，中段鋪陳熱愛、訓練與極限難關，尾段總結昇華立志）",
+          "單純的書信體對話",
+          "問答對話說明文"
+        ],
+        answer: 1,
+        explanation: "首段總起（介紹人物與封號），中段分述（喜愛高山、日常嚴訓、攻頂克服難關），尾段總結（勇氣昇華），是標準的「總—分—總」架構。"
+      },
+      {
+        category: "生活情境與學習遷移應用",
+        prompt: "學習了江秀真的故事後，四年級的小晴在練習大隊接力跑步時感到雙腿痠痛、想放棄退出。小晴可以用江秀真的哪種精神勉勵自己？",
+        options: [
+          "「既然太累就直接請假回家休息，不要勉強自己」",
+          "「想像自己跑過終點線的快樂，用成功的渴望激勵自己堅持再邁出一步」",
+          "「怪罪跑道太滑或是風太大，決定下次不跑了」",
+          "「等別人跑完全部路程，自己再出發」"
+        ],
+        answer: 1,
+        explanation: "正向遷移：江秀真在體力用盡時，用登頂成功的畫面鼓舞自己突破極限；小晴也能以此自我激勵、克服痠痛。"
+      }
+    ];
+
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let hasAnsweredCurrent = false;
+
+    function renderQuizQuestion() {
+      hasAnsweredCurrent = false;
+      const q = quizQuestions[currentQuizIndex];
+      document.getElementById('currentQuizIndexText').innerText = currentQuizIndex + 1;
+      document.getElementById('quizProgressBar').style.width = `${((currentQuizIndex + 1) / 10) * 100}%`;
+      document.getElementById('questionCategoryBadge').innerText = q.category;
+      document.getElementById('questionPrompt').innerText = `${currentQuizIndex + 1}. ${q.prompt}`;
+
+      const optionsBox = document.getElementById('quizOptionsContainer');
+      optionsBox.innerHTML = '';
+
+      q.options.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-morandi-border bg-white hover:bg-morandi-bg transition flex items-center gap-3 text-base sm:text-lg min-h-[52px] shadow-sm';
+        btn.innerHTML = `
+          <span class="w-8 h-8 rounded-full border border-morandi-border bg-morandi-bg flex items-center justify-center font-bold text-morandi-charcoal text-sm flex-shrink-0">
+            ${['A', 'B', 'C', 'D'][optIdx]}
+          </span>
+          <span class="flex-grow">${optText}</span>
+        `;
+        btn.onclick = () => selectQuizAnswer(optIdx, btn);
+        optionsBox.appendChild(btn);
+      });
+
+      document.getElementById('quizFeedbackBox').classList.add('hidden');
+    }
+
+    function selectQuizAnswer(selectedIndex, selectedBtn) {
+      if (hasAnsweredCurrent) return;
+      hasAnsweredCurrent = true;
+
+      const q = quizQuestions[currentQuizIndex];
+      const allButtons = document.querySelectorAll('#quizOptionsContainer button');
+      const feedbackBox = document.getElementById('quizFeedbackBox');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+      const feedbackIcon = document.getElementById('feedbackIcon');
+      const feedbackExp = document.getElementById('feedbackExplanation');
+
+      // 禁用所有按鈕
+      allButtons.forEach(b => b.disabled = true);
+
+      if (selectedIndex === q.answer) {
+        playSound('correct');
+        quizScore += 10;
+        document.getElementById('quizScoreText').innerText = quizScore;
+        selectedBtn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+        feedbackBox.className = 'p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50/70 space-y-2 mt-4';
+        feedbackTitle.innerText = '答對了！太出色了！';
+        feedbackTitle.className = 'font-bold text-lg text-emerald-900';
+        feedbackIcon.innerText = '🎉';
+      } else {
+        playSound('wrong');
+        selectedBtn.classList.add('border-rose-400', 'bg-rose-50', 'text-rose-900');
+        // 標記出正確答案
+        allButtons[q.answer].classList.add('border-emerald-500', 'bg-emerald-50/80');
+        feedbackBox.className = 'p-5 rounded-2xl border-2 border-rose-300 bg-rose-50/70 space-y-2 mt-4';
+        feedbackTitle.innerText = '這題需要再想一想喔！';
+        feedbackTitle.className = 'font-bold text-lg text-rose-900';
+        feedbackIcon.innerText = '💡';
+      }
+
+      feedbackExp.innerText = q.explanation;
+      feedbackBox.classList.remove('hidden');
+    }
+
+    function goToNextQuestion() {
+      playSound('click');
+      if (currentQuizIndex < quizQuestions.length - 1) {
+        currentQuizIndex++;
+        renderQuizQuestion();
+      } else {
+        showQuizSummary();
+      }
+    }
+
+    function showQuizSummary() {
+      playSound('celebrate');
+      document.getElementById('quizQuestionCard').classList.add('hidden');
+      const summaryBoard = document.getElementById('quizSummaryBoard');
+      summaryBoard.classList.remove('hidden');
+
+      document.getElementById('finalScoreVal').innerText = quizScore;
+      const badgeTitle = document.getElementById('finalBadgeTitle');
+      const comment = document.getElementById('finalSummaryComment');
+
+      if (quizScore === 100) {
+        badgeTitle.innerText = '榮獲金牌稱號：【巔峰大文豪 🏔️】';
+        comment.innerText = '全數答對！你宛如登上了教育界的珠穆朗瑪峰，無論是課文深意、修辭描寫還是寫作架構都已經完全融會貫通！陳佳釧老師為你感到無比驕傲！';
+        triggerConfettiEffect();
+      } else if (quizScore >= 80) {
+        badgeTitle.innerText = '榮獲銀牌稱號：【勇攀高峰小學者 🌟】';
+        comment.innerText = '非常優秀！你已經精準掌握了大部分的核心素養與寫作密碼，只要多留意幾題觀念解析，就能百尺竿頭、更進一步！';
+      } else {
+        badgeTitle.innerText = '榮獲銅牌稱號：【不畏風雪登山探險家 🧗】';
+        comment.innerText = '別氣餒！就像江秀真攀登高山時也經歷過無數次鍛鍊與挫折，再次翻閱課文筆記與解析，重測一次一定能勇奪高分！';
+      }
+    }
+
+    function resetFullQuiz() {
+      playSound('click');
+      currentQuizIndex = 0;
+      quizScore = 0;
+      document.getElementById('quizScoreText').innerText = '0';
+      document.getElementById('quizQuestionCard').classList.remove('hidden');
+      document.getElementById('quizSummaryBoard').classList.add('hidden');
+      renderQuizQuestion();
+    }
+
+    /* =====================================================================
+       6. 慶祝滿版紙花特效 (Confetti Animation)
+       ===================================================================== */
+    function triggerConfettiEffect() {
+      const canvas = document.getElementById('confettiCanvas');
+      canvas.classList.remove('hidden');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#8A9A86', '#7A8B99', '#C59B8B', '#D9CEB2', '#F6E05E', '#FEB2B2'];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: Math.random() * 4 - 2,
+          vy: Math.random() * 4 + 3,
+          rot: Math.random() * 360,
+          rotSpeed: Math.random() * 10 - 5
+        });
+      }
+
+      let frame = 0;
+      function animateConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.rotSpeed;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frame++;
+        if (frame < 180) {
+          requestAnimationFrame(animateConfetti);
+        } else {
+          canvas.classList.add('hidden');
+        }
+      }
+      requestAnimationFrame(animateConfetti);
+    }
+
+    /* =====================================================================
+       7. 頁面初始化加載
+       ===================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      // 初始化事件排序遊戲
+      resetOrderGame();
+      // 初始化 10 題測驗
+      renderQuizQuestion();
+      // 初始化轉盤
+      renderWheel();
+      // 初始化預設名人（江秀真）九宮格與好詞庫
+      selectHero('jiang');
+
+      // 設定日期
+      const today = new Date();
+      const dateStr = `學習日期：${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+      document.getElementById('finalEssayDate').innerText = dateStr;
+      
+      // 預設切換為課文閱讀
+      switchTab('reading');
+    });
+  </script>
+</body>
+</html>
